@@ -16,16 +16,12 @@ from ckan.controllers.package import PackageController
 import urllib2
 import importlib
 import hashlib
-
 import threading
 import Queue
 
-<<<<<<< HEAD
 from ckan.logic import get_action
 import ckan.model as model
 
-=======
->>>>>>> bc89eef50b950da6f8079cbb5d1abf70a5886070
 log = logging.getLogger('ckanext.googleanalytics')
 
 
@@ -46,7 +42,6 @@ def _post_analytics(
             "ea": request_obj_type + request_function,
             "el": request_id,
         }
-<<<<<<< HEAD
         context = {'model': model, 'session': model.Session, 'user': c.user}
         data = {
                     'resource_id': request_id,
@@ -58,8 +53,6 @@ def _post_analytics(
             get_action('resource_tracker_create')(context, data)
         except:
             pass
-=======
->>>>>>> bc89eef50b950da6f8079cbb5d1abf70a5886070
         GoogleAnalyticsPlugin.analytics_queue.put(data_dict)
 
 
