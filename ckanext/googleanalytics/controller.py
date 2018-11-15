@@ -16,8 +16,11 @@ from paste.util.multidict import MultiDict
 
 from ckan.controllers.api import ApiController
 
+<<<<<<< HEAD
 import ckan.model as model
 
+=======
+>>>>>>> bc89eef50b950da6f8079cbb5d1abf70a5886070
 log = logging.getLogger('ckanext.googleanalytics')
 
 
@@ -27,6 +30,10 @@ class GAController(BaseController):
         c.top_resources = dbutil.get_top_resources(limit=10)
         return render('summary.html')
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> bc89eef50b950da6f8079cbb5d1abf70a5886070
 class GAApiController(ApiController):
     # intercept API calls to record via google analytics
     def _post_analytics(
@@ -45,6 +52,7 @@ class GAApiController(ApiController):
                 "ea": request_obj_type+request_function,
                 "el": request_id,
             }
+<<<<<<< HEAD
             context = {'model': model, 'session': model.Session, 'user': c.user}
             data = {
                     'resource_id': request_id,
@@ -55,6 +63,8 @@ class GAApiController(ApiController):
                 logic.get_action('resource_tracker_create')(context, data)
             except:
                 pass
+=======
+>>>>>>> bc89eef50b950da6f8079cbb5d1abf70a5886070
             plugin.GoogleAnalyticsPlugin.analytics_queue.put(data_dict)
 
     def action(self, logic_function, ver=None):
