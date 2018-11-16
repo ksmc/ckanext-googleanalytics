@@ -54,6 +54,7 @@ Installation
 1. Install the extension as usual, e.g. (from an activated virtualenv):
 
     ::
+    
 	  $ cd /usr/lib/ckan/default/src
       $ git clone https://github.com/Jiaza492/ckanext-googleanalytics.git
       $ . bin/activate
