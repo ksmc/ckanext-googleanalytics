@@ -55,10 +55,10 @@ Installation
 
     ::
 	
-	$ cd /usr/lib/ckan/default/src/
-    $ git clone https://github.com/Jiaza492/ckanext-googleanalytics.git
-    $ . bin/activate
-    $ (pyenv) pip install -r ckanext-googleanalytics/requirements.txt
+	  $ cd /usr/lib/ckan/default/src
+      $ git clone https://github.com/Jiaza492/ckanext-googleanalytics.git
+      $ . bin/activate
+      $ (pyenv) pip install -r ckanext-googleanalytics/requirements.txt
 
 2. Edit your development.ini (or similar) to provide these necessary parameters:
 
@@ -84,7 +84,7 @@ Installation
    plugin should be separated with a space).
 
 4. If you would like to store google analytics raw data to your local PostgresDB, install 
-   `ckanext-activitiestracker<https://github.com/Jiaza492/ckanext-activitiestracker.git>`_
+   `ckanext-activitiestracker <https://github.com/Jiaza492/ckanext-activitiestracker.git>`
    and enable it with google analytics in your ini file
    
    ::
@@ -136,7 +136,7 @@ This plugin supports cross-domain tracking using Googles' site linking feature.
 
 To use this, set the ``googleanalytics.linked_domains`` configuration option to a (comma seperated) list of domains to report for.
 
-See `Googles' documentation<https://support.google.com/analytics/answer/1034342?hl=en>`_ for more information
+See `Googles' documentation<https://support.google.com/analytics/answer/1034342?hl=en>` for more information
 
 Setting Up Statistics Retrieval from Google Analytics
 -----------------------------------------------------
