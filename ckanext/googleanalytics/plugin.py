@@ -42,15 +42,16 @@ def _post_analytics(
             "ea": request_obj_type + request_function,
             "el": request_id,
         }
-        context = {'model': model, 'session': model.Session, 'user': c.user}
-        data = {
-                    'resource_id': request_id,
-                    'event': request_function,
-                    'obj_type': request_obj_type,
-    #               'package_id': c.pkg_dict['id'],
-                    } 
-        try:   
-            get_action('resource_tracker_create')(context, data)
+        
+        try:
+            if converters.asbool(config.get('googleanalytics.activities_tracker', False)) == True:
+                context = {'model': model, 'session': model.Session, 'user': c.user}
+                data = {
+                            'resource_id': request_id,
+                            'event': request_function,
+                            'obj_type': request_obj_type,
+                        }    
+                get_action('resource_tracker_create')(context, data)
         except:
             pass
         GoogleAnalyticsPlugin.analytics_queue.put(data_dict)

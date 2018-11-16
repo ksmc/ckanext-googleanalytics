@@ -10,6 +10,7 @@ import ckan.logic as logic
 import hashlib
 import plugin
 from pylons import config
+import paste.deploy.converters as converters
 
 from webob.multidict import UnicodeMultiDict
 from paste.util.multidict import MultiDict
@@ -45,14 +46,15 @@ class GAApiController(ApiController):
                 "el": request_id,
             }
             
-            context = {'model': model, 'session': model.Session, 'user': c.user}
-            data = {
-                    'resource_id': request_id,
-                    'event': request_function,
-                    'obj_type': request_obj_type,
-                    } 
-            try:   
-                logic.get_action('resource_tracker_create')(context, data)
+            try:
+                if converters.asbool(config.get('googleanalytics.activities_tracker', False)) == True:
+                    context = {'model': model, 'session': model.Session, 'user': c.user}
+                    data = {
+                                'resource_id': request_id,
+                                'event': request_function,
+                                'obj_type': request_obj_type,
+                            }    
+                    logic.get_action('resource_tracker_create')(context, data)
             except:
                 pass
             plugin.GoogleAnalyticsPlugin.analytics_queue.put(data_dict)

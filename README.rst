@@ -1,4 +1,4 @@
-CKAN Google Analytics Extension
+CKAN Google Analytics Extension (revision for local storage)
 ===============================
 
 **Status:** Production
@@ -54,9 +54,11 @@ Installation
 1. Install the extension as usual, e.g. (from an activated virtualenv):
 
     ::
-
-    $ pip install -e  git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics
-    $ pip install -r ckanext-googleanalytics/requirements.txt
+	
+	$ cd /usr/lib/ckan/default/src/
+    $ git clone https://github.com/Jiaza492/ckanext-googleanalytics.git
+    $ . bin/activate
+    $ (pyenv) pip install -r ckanext-googleanalytics/requirements.txt
 
 2. Edit your development.ini (or similar) to provide these necessary parameters:
 
@@ -81,13 +83,24 @@ Installation
    (If there are other plugins activated, add this to the list.  Each
    plugin should be separated with a space).
 
-4. If you are using this plugin with a version of CKAN < 2.0 then you should
-   also put the following in your ini file::
+4. If you would like to store google analytics raw data to your local PostgresDB, install 
+   `ckanext-activitiestracker<https://github.com/Jiaza492/ckanext-activitiestracker.git>`_
+   and enable it with google analytics in your ini file
+   
+   ::
+
+      googleanalytics.activities_tracker = true
+   
+
+5. If you are using this plugin with a version of CKAN < 2.0 then you should
+   also put the following in your ini file
+   
+   ::
 
        ckan.legacy_templates = true
 
 
-5. Finally, there are some optional configuration settings (shown here
+6. Finally, there are some optional configuration settings (shown here
    with their default settings)::
 
       googleanalytics_resource_prefix = /downloads/
