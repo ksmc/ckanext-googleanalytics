@@ -12,6 +12,7 @@ import gasnippet
 from routes.mapper import SubMapper, Mapper as _Mapper
 from pylons import config
 from ckan.controllers.package import PackageController
+from ckanext.datastore.controller import DatastoreController
 
 import urllib2
 import importlib
@@ -72,6 +73,20 @@ def post_analytics_decorator(func):
 
     return func_wrapper
 
+def datastore_dump_decorator(func):
+
+    def func_wrapper(cls, resource_id):
+        _post_analytics(
+            c.user,
+            "CKAN Datastore Download Request",
+            "Resource",
+            "Datastore Download",
+            resource_id
+        )
+
+        return func(cls, resource_id)
+
+    return func_wrapper
 
 class GoogleAnalyticsException(Exception):
     pass
@@ -223,7 +238,7 @@ class GoogleAnalyticsPlugin(p.SingletonPlugin):
             m.connect('/rest/{register}/{id}', action='update', conditions=PUT)
             m.connect('/rest/{register}/{id}', action='update', conditions=POST)
             m.connect('/rest/{register}/{id}', action='delete', conditions=DELETE)
-
+        
         return map
 
     def after_map(self, map):
@@ -280,7 +295,9 @@ class GoogleAnalyticsPlugin(p.SingletonPlugin):
                 controller_class = getattr(module, route_controller[1])
                 controller_class.resource_download = post_analytics_decorator(
                     controller_class.resource_download)
+                if route_controller[1] == 'DatastoreController':
+                    controller_class.dump = datastore_dump_decorator(controller_class.dump)
             else:
                 # If no custom uploader applied, use the default one
-                PackageController.resource_download = post_analytics_decorator(
-                    PackageController.resource_download)
+                PackageController.resource_download = post_analytics_decorator(PackageController.resource_download)
+                DatastoreController.dump = datastore_dump_decorator(DatastoreController.dump)
