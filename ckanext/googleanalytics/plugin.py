@@ -40,7 +40,7 @@ def _post_analytics(
             "dp": c.environ['PATH_INFO'],
             "dr": c.environ.get('HTTP_REFERER', ''),
             "ec": event_type,
-            "ea": request_obj_type + request_function,
+            "ea": '_'.join([request_obj_type, request_function]),
             "el": request_id,
         }
         
@@ -48,9 +48,9 @@ def _post_analytics(
             if converters.asbool(config.get('googleanalytics.activities_tracker', False)) == True:
                 context = {'model': model, 'session': model.Session, 'user': c.user}
                 data = {
-                            'resource_id': request_id,
-                            'event': request_function,
-                            'obj_type': request_obj_type,
+                            'el': request_id,
+                            'ec': event_type,
+                            'ea': '_'.join([request_obj_type, request_function]),
                         }    
                 get_action('resource_tracker_create')(context, data)
         except:
@@ -63,9 +63,9 @@ def post_analytics_decorator(func):
     def func_wrapper(cls, id, resource_id, filename):
         _post_analytics(
             c.user,
-            "CKAN Resource Download Request",
-            "Resource",
-            "Download",
+            "CKAN Resource Request",
+            "resource",
+            "download",
             resource_id
         )
 
@@ -78,9 +78,9 @@ def datastore_dump_decorator(func):
     def func_wrapper(cls, resource_id):
         _post_analytics(
             c.user,
-            "CKAN Datastore Download Request",
-            "Resource",
-            "Datastore Download",
+            "CKAN Datastore Request",
+            "resource",
+            "download",
             resource_id
         )
 

@@ -41,16 +41,16 @@ class GAApiController(ApiController):
                 "dp": c.environ['PATH_INFO'],
                 "dr": c.environ.get('HTTP_REFERER', ''),
                 "ec": "CKAN API Request",
-                "ea": request_obj_type+request_function,
+                "ea": '_'.join([request_obj_type,request_function]),
                 "el": request_id,
             }
             try:
                if converters.asbool(config.get('googleanalytics.activities_tracker', False)) == True:
                     context = {'model': model, 'session': model.Session, 'user': c.user}
                     data = {
-                                'resource_id': request_id,
-                                'event': request_function,
-                                'obj_type': request_obj_type,
+                                'el': request_id,
+                                'ec': "CKAN API Request",
+                                'ea': '_'.join([request_obj_type,request_function]),
                             }    
                     logic.get_action('resource_tracker_create')(context, data)
             except:
