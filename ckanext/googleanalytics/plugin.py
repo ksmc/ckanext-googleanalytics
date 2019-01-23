@@ -79,8 +79,8 @@ def datastore_dump_decorator(func):
         _post_analytics(
             c.user,
             "CKAN Datastore Download Request",
-            "Resource",
-            "Datastore Download",
+            "Datastore Resource",
+            "Download",
             resource_id
         )
 
