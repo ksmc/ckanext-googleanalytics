@@ -48,9 +48,9 @@ def _post_analytics(
             if converters.asbool(config.get('googleanalytics.activities_tracker', False)) == True:
                 context = {'model': model, 'session': model.Session, 'user': c.user}
                 data = {
-                            'resource_id': request_id,
-                            'event': request_function,
-                            'obj_type': request_obj_type,
+                            'el': request_id,
+                            'ec': event_type,
+                            'ea': "-".join([request_obj_type,request_function]),
                         }    
                 get_action('resource_tracker_create')(context, data)
         except:

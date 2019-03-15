@@ -32,7 +32,7 @@ class GAApiController(ApiController):
             self, user, request_obj_type, request_function, request_id):
         if config.get('googleanalytics.id'):
             data_dict = {
-                "v": 1,
+                "v": 1, 
                 "tid": config.get('googleanalytics.id'),
                 "cid": hashlib.md5(user).hexdigest(),
                 # customer id should be obfuscated
@@ -48,9 +48,9 @@ class GAApiController(ApiController):
                if converters.asbool(config.get('googleanalytics.activities_tracker', False)) == True:
                     context = {'model': model, 'session': model.Session, 'user': c.user}
                     data = {
-                                'resource_id': request_id,
-                                'event': request_function,
-                                'obj_type': request_obj_type,
+                                'el': request_id,
+                                'ec': "CKAN API Request",
+                                'ea': "-".join([request_obj_type,request_function]),
                             }    
                     logic.get_action('resource_tracker_create')(context, data)
             except:
